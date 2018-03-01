@@ -9,6 +9,7 @@
 import UIKit
 import RxSwift
 import RxCocoa
+import QuartzCore
 class HomeViewController: BaseViewController, UITableViewDelegate {
 
     @IBOutlet weak var twitTextView: UITextView!
@@ -21,6 +22,8 @@ class HomeViewController: BaseViewController, UITableViewDelegate {
     
     @IBOutlet weak var tableView: UITableView!
     
+    var viewModel : HomeViewModel?
+    
 //    let items = [0,1,2,3,4,5]
     
     let twitMessageCellIdentifier = "TwitMessageCell"
@@ -28,10 +31,11 @@ class HomeViewController: BaseViewController, UITableViewDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-//        self.tableView.register(TwitMessageCell.self, forCellReuseIdentifier: twitMessageCellIdentifier)
-        
-        // (optional) include this line if you want to remove the extra empty cell divider lines
-        // self.tableView.tableFooterView = UIView()
+        // Set Twit TextView Border Color And Radius
+        let borderColor : UIColor = UIColor.lightGray
+        twitTextView.layer.borderWidth = 1
+        twitTextView.layer.borderColor = borderColor.cgColor
+        twitTextView.layer.cornerRadius = 10.0
         
         // This view controller itself will provide the delegate methods and row data for the table view.
         // Do any additional setup after loading the view, typically from a nib.
@@ -43,16 +47,15 @@ class HomeViewController: BaseViewController, UITableViewDelegate {
     }
     
     override func initViewModel() {
-        
+        if(viewModel == nil){
+            viewModel = HomeViewModel()
+        }
     }
     
     override func initReactive() {
-        let items = Observable.just(
-            (0..<20).map { "\($0)" }
-        )
+        self.viewModel?.items.value = (0..<20).map { "\($0)" }
 
-
-        items
+        self.viewModel?.items.asObservable()
             .bind(to: tableView.rx.items(cellIdentifier: twitMessageCellIdentifier, cellType: TwitMessageCell.self)) { (row, element, cell) in
                 cell.twitMessageLabel?.text = "\(element) @ row \(row)"
                 print("\(element) @ row \(row)")

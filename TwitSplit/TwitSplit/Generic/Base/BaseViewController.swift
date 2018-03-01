@@ -1,5 +1,5 @@
 //
-//  HomeViewController
+//  BaseViewController.swift
 //  TwitSplit
 //
 //  Created by Duc Nguyen on 3/1/18.
@@ -7,35 +7,27 @@
 //
 
 import UIKit
-import RxSwift
-class HomeViewController: BaseViewController {
-
-    @IBOutlet weak var twitTextView: UITextView!
-    
-    @IBOutlet weak var twitButton: UIButton!
-    
-    @IBOutlet weak var clearButton: UIButton!
-    
-    @IBOutlet weak var textNumberLabel: UILabel!
+class BaseViewController : UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        initViewModel()
+        initReactive()
         // Do any additional setup after loading the view, typically from a nib.
     }
-
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
     
-    override func initViewModel() {
+    func initViewModel() {
         
     }
     
-    override func initReactive() {
-        
+    func initReactive(){
     }
-
-
+    
+    
 }
 

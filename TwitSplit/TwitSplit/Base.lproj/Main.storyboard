@@ -88,21 +88,43 @@
                                     <constraint firstItem="sFD-Xx-djl" firstAttribute="centerY" secondItem="aRy-ln-adG" secondAttribute="centerY" id="esI-n0-BRV"/>
                                 </constraints>
                             </view>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="hhl-aF-crU">
-                                <rect key="frame" x="0.0" y="243" width="375" height="424"/>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="64" estimatedRowHeight="64" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="hhl-aF-crU">
+                                <rect key="frame" x="0.0" y="251" width="375" height="416"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="TwitMessageCell" id="ueX-kW-f2P" customClass="TwitMessageCell" customModule="TwitSplit" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="28" width="375" height="64"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="ueX-kW-f2P" id="NUV-z3-eAN">
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="63.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vaP-or-EEg">
+                                                    <rect key="frame" x="8" y="4" width="361" height="36"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                        </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="twitMessageLabel" destination="vaP-or-EEg" id="PD8-ev-h9u"/>
+                                        </connections>
+                                    </tableViewCell>
+                                </prototypes>
                             </tableView>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstItem="hhl-aF-crU" firstAttribute="top" secondItem="X3K-oT-c6Z" secondAttribute="bottom" id="0b8-PL-Vz0"/>
                             <constraint firstItem="X3K-oT-c6Z" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="9gM-9m-TDm"/>
-                            <constraint firstItem="hhl-aF-crU" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="C3h-Ne-qvT"/>
+                            <constraint firstItem="hhl-aF-crU" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="BHU-6w-fV0"/>
+                            <constraint firstItem="hhl-aF-crU" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="KMx-xI-kcJ"/>
                             <constraint firstItem="X3K-oT-c6Z" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="NZ9-gx-o0v"/>
                             <constraint firstItem="aRy-ln-adG" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="QEX-TC-Dnb"/>
-                            <constraint firstItem="hhl-aF-crU" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="RJe-sG-EhV"/>
                             <constraint firstItem="aRy-ln-adG" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="i6I-AY-gxi"/>
-                            <constraint firstItem="hhl-aF-crU" firstAttribute="bottom" secondItem="6Tk-OE-BBY" secondAttribute="bottom" id="oYU-Js-Jb9"/>
+                            <constraint firstItem="hhl-aF-crU" firstAttribute="top" secondItem="X3K-oT-c6Z" secondAttribute="bottom" constant="8" id="iEM-iX-NDN"/>
+                            <constraint firstItem="hhl-aF-crU" firstAttribute="bottom" secondItem="6Tk-OE-BBY" secondAttribute="bottom" id="siP-Ck-aJM"/>
                             <constraint firstItem="X3K-oT-c6Z" firstAttribute="top" secondItem="aRy-ln-adG" secondAttribute="bottom" id="tm3-8F-ELN"/>
                             <constraint firstItem="aRy-ln-adG" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="vsO-PT-RbO"/>
                         </constraints>
@@ -110,6 +132,7 @@
                     </view>
                     <connections>
                         <outlet property="clearButton" destination="Aqh-o9-8XM" id="uDp-Sy-8Kq"/>
+                        <outlet property="tableView" destination="hhl-aF-crU" id="J5n-B6-gPW"/>
                         <outlet property="textNumberLabel" destination="7xS-rf-pZc" id="KmE-Qm-VGf"/>
                         <outlet property="twitButton" destination="68q-9U-mSV" id="1wH-sk-vSq"/>
                         <outlet property="twitTextView" destination="faO-Hg-pLg" id="WUW-g2-wEG"/>

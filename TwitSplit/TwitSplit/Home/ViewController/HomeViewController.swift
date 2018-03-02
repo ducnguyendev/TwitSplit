@@ -37,6 +37,9 @@ class HomeViewController: BaseViewController, UITableViewDelegate {
         twitTextView.layer.borderColor = borderColor.cgColor
         twitTextView.layer.cornerRadius = 10.0
         
+        tableView.rowHeight = UITableViewAutomaticDimension
+        tableView.estimatedRowHeight = 300
+        
         // This view controller itself will provide the delegate methods and row data for the table view.
         // Do any additional setup after loading the view, typically from a nib.
     }
@@ -53,13 +56,10 @@ class HomeViewController: BaseViewController, UITableViewDelegate {
     }
     
     override func initReactive() {
-        
-        self.viewModel?.items.value = (0..<20).map { "\($0)" }
 
         self.viewModel?.items.asObservable()
             .bind(to: tableView.rx.items(cellIdentifier: twitMessageCellIdentifier, cellType: TwitMessageCell.self)) { (row, element, cell) in
-                cell.twitMessageLabel?.text = "\(element) @ row \(row)"
-                print("\(element) @ row \(row)")
+                cell.twitMessageLabel?.text = element
             }
             .disposed(by: disposeBag)
 
@@ -79,15 +79,14 @@ class HomeViewController: BaseViewController, UITableViewDelegate {
             })
             .disposed(by: disposeBag)
         
-        self.twitButton.rx.tap.subscribe(onNext: { _ in
-            
+        self.twitButton.rx.tap.subscribe(onNext: { [weak self] _ in
+            self?.viewModel?.addNewTwit(message: self?.viewModel?.twitMessage.value ?? "")
+            self?.viewModel?.resetTwitMessage()
         }).disposed(by: disposeBag)
         
-        self.clearButton.rx.tap.subscribe(onNext: { _ in
-            
+        self.clearButton.rx.tap.subscribe(onNext: { [weak self] _ in
+            self?.viewModel?.resetTwitMessage()
         }).disposed(by: disposeBag)
-        
-//        self.viewModel?.twitMessage <-> self.twitTextView
         
         _ = self.twitTextView.rx.textInput <-> (self.viewModel?.twitMessage)!
         

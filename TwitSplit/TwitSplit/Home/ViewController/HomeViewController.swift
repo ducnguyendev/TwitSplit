@@ -53,6 +53,7 @@ class HomeViewController: BaseViewController, UITableViewDelegate {
     }
     
     override func initReactive() {
+        
         self.viewModel?.items.value = (0..<20).map { "\($0)" }
 
         self.viewModel?.items.asObservable()
@@ -77,6 +78,34 @@ class HomeViewController: BaseViewController, UITableViewDelegate {
                 print("Tapped Detail @ \(indexPath.section),\(indexPath.row)")
             })
             .disposed(by: disposeBag)
+        
+        self.twitButton.rx.tap.subscribe(onNext: { _ in
+            
+        }).disposed(by: disposeBag)
+        
+        self.clearButton.rx.tap.subscribe(onNext: { _ in
+            
+        }).disposed(by: disposeBag)
+        
+//        self.viewModel?.twitMessage <-> self.twitTextView
+        
+        _ = self.twitTextView.rx.textInput <-> (self.viewModel?.twitMessage)!
+        
+        let twitButtonValidation = self.viewModel?.twitMessage.asObservable().map({!$0.isEmpty}).share(replay: 1)
+        
+        twitButtonValidation?
+            .bind(to: self.twitButton.rx.isEnabled)
+            .disposed(by: disposeBag)
+        
+        self.viewModel?.twitMessage.asObservable().subscribe(onNext: { [weak self] (value) in
+            self?.textNumberLabel.text = "\(value.count)"
+        }, onError: { (error) in
+            print(error)
+        }, onCompleted: {
+            
+        }, onDisposed: {
+            
+        }).disposed(by: disposeBag)
         
     }
 

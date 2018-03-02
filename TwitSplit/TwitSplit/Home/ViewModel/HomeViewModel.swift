@@ -10,4 +10,5 @@ import Foundation
 import RxSwift
 struct HomeViewModel{
     var items = Variable([])
+    var twitMessage : Variable<String> = Variable("")
 }

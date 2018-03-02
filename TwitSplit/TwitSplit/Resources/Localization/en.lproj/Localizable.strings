@@ -5,3 +5,7 @@
   Created by Duc Nguyen on 3/2/18.
   Copyright © 2018 Duc Nguyen. All rights reserved.
 */
+
+"AppName" = "TwitSplit";
+"ErrorSplitMessage" = "The message contains a span of non-whitespace characters longer than 50 characters";
+"OK" = "OK";

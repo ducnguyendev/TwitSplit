@@ -28,17 +28,20 @@ class HomeViewController: BaseViewController, UITableViewDelegate {
     
     let twitMessageCellIdentifier = "TwitMessageCell"
     
+    let borderWidth : CGFloat = 1.00
+    let cornerRadius : CGFloat = 10.0
+    let estimationHeight : CGFloat = 300.0
     override func viewDidLoad() {
         super.viewDidLoad()
         
         // Set Twit TextView Border Color And Radius
         let borderColor : UIColor = UIColor.lightGray
-        twitTextView.layer.borderWidth = 1
+        twitTextView.layer.borderWidth = borderWidth
         twitTextView.layer.borderColor = borderColor.cgColor
-        twitTextView.layer.cornerRadius = 10.0
+        twitTextView.layer.cornerRadius = cornerRadius
         
         tableView.rowHeight = UITableViewAutomaticDimension
-        tableView.estimatedRowHeight = 300
+        tableView.estimatedRowHeight = estimationHeight
         
         // This view controller itself will provide the delegate methods and row data for the table view.
         // Do any additional setup after loading the view, typically from a nib.
@@ -80,8 +83,16 @@ class HomeViewController: BaseViewController, UITableViewDelegate {
             .disposed(by: disposeBag)
         
         self.twitButton.rx.tap.subscribe(onNext: { [weak self] _ in
-            self?.viewModel?.addNewTwit(message: self?.viewModel?.twitMessage.value ?? "")
-            self?.viewModel?.resetTwitMessage()
+            let hasError = self?.viewModel?.addNewTwit(message: self?.viewModel?.twitMessage.value ?? "")
+            if(hasError == false){
+                self?.viewModel?.resetTwitMessage()
+            }
+            else{
+                let alert = UIAlertController(title: NSLocalizedString("AppName", comment: ""), message: NSLocalizedString("ErrorSplitMessage", comment: ""), preferredStyle: UIAlertControllerStyle.alert)
+                alert.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: ""), style: UIAlertActionStyle.default, handler: nil))
+                self?.present(alert, animated: true, completion: nil)
+            }
+            
         }).disposed(by: disposeBag)
         
         self.clearButton.rx.tap.subscribe(onNext: { [weak self] _ in
